@@ -1,0 +1,2 @@
+// Shared library module. All common configuration is inherited from the top-level
+// build.gradle. This module must not depend on any of our service modules.

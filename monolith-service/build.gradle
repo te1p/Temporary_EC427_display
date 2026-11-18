@@ -1,0 +1,39 @@
+// monolith-service: everything that we have not (yet) pulled out into a dedicated service.
+dependencies {
+	implementation project(':stock-app-shared')
+}
+
+task runServer(type: JavaExec) {
+	mainClass = 'edu.bu.StockAppServer'
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+//task runServerWithMockFinhub(type: JavaExec) {
+//	mainClass = 'edu.bu.StockAppServer'
+//	classpath = sourceSets.main.runtimeClasspath
+//	args = ["mockFinhub"]
+//}
+//
+//// call this with --debug-jvm to have it start and wait for a debugger (IntelliJ) to be attached to it
+//task runServerWithMockFinhubPreload(type: JavaExec) {
+//	mainClass = 'edu.bu.StockAppServer'
+//	classpath = sourceSets.main.runtimeClasspath
+//	args = ["mockFinhub", "msBetweenCalls=10"]
+//}
+
+// Unlike the built-in `test` task, a custom Test task is not wired to the test
+// source set automatically - without these two lines Gradle finds no tests (NO-SOURCE).
+task executeServerIntegrationTest(type: Test) {
+	useJUnitPlatform {
+		includeTags "IntegrationTest"
+	}
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+
+	// Always run, even when nothing changed since the last invocation.
+	outputs.upToDateWhen { false }
+
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}

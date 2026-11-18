@@ -1,0 +1,6 @@
+# dependency/library code
+node_modules/
+
+# build output
+dist/
+*.tsbuildinfo

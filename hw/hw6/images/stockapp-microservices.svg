@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#444"/>
+    </marker>
+  </defs>
+
+  <!-- BEFORE: single process -->
+  <ellipse cx="150" cy="60" rx="70" ry="32" fill="#cdeef6" stroke="#6bb8cc"/>
+  <text x="150" y="66" text-anchor="middle" font-size="15">FinnHub</text>
+
+  <rect x="40" y="130" width="220" height="230" rx="10" fill="#fde3e1" stroke="#d98880"/>
+  <text x="150" y="155" text-anchor="middle" font-size="15" font-weight="bold">StockApp</text>
+  <rect x="60" y="170" width="180" height="34" rx="5" fill="#fff" stroke="#d98880"/>
+  <text x="150" y="192" text-anchor="middle" font-size="13">web server :8000</text>
+  <rect x="60" y="214" width="180" height="34" rx="5" fill="#fff" stroke="#d98880"/>
+  <text x="150" y="236" text-anchor="middle" font-size="13">analytics</text>
+  <rect x="60" y="258" width="180" height="34" rx="5" fill="#fff" stroke="#d98880"/>
+  <text x="150" y="280" text-anchor="middle" font-size="13">data store</text>
+  <rect x="60" y="302" width="180" height="34" rx="5" fill="#fff" stroke="#d98880"/>
+  <text x="150" y="324" text-anchor="middle" font-size="13">FinnHub listener</text>
+
+  <line x1="150" y1="92" x2="150" y2="128" stroke="#444" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <circle cx="150" cy="395" r="9" fill="none" stroke="#444" stroke-width="1.5"/>
+  <line x1="150" y1="386" x2="150" y2="362" stroke="#444" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- big arrow -->
+  <path d="M 300 240 L 360 240" stroke="#888" stroke-width="8" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- AFTER: microservices -->
+  <ellipse cx="800" cy="60" rx="70" ry="32" fill="#cdeef6" stroke="#6bb8cc"/>
+  <text x="800" y="66" text-anchor="middle" font-size="15">FinnHub</text>
+
+  <rect x="710" y="130" width="180" height="60" rx="10" fill="#fde3e1" stroke="#d98880"/>
+  <text x="800" y="156" text-anchor="middle" font-size="14" font-weight="bold">finnhub-service</text>
+  <text x="800" y="176" text-anchor="middle" font-size="12">:8004</text>
+
+  <rect x="710" y="260" width="180" height="60" rx="10" fill="#d6eaf8" stroke="#7fb3d5"/>
+  <text x="800" y="286" text-anchor="middle" font-size="14" font-weight="bold">queue-service</text>
+  <text x="800" y="306" text-anchor="middle" font-size="12">:8010</text>
+
+  <!-- same four inner boxes as the "before" picture, minus the one that moved out, so
+       that what did and did not change is countable -->
+  <rect x="420" y="180" width="190" height="180" rx="10" fill="#fdebd0" stroke="#e0b060"/>
+  <text x="515" y="206" text-anchor="middle" font-size="14" font-weight="bold">monolith-service</text>
+  <text x="515" y="226" text-anchor="middle" font-size="12">:8000</text>
+  <rect x="440" y="244" width="150" height="30" rx="5" fill="#fff" stroke="#e0b060"/>
+  <text x="515" y="264" text-anchor="middle" font-size="12">web server</text>
+  <rect x="440" y="282" width="150" height="30" rx="5" fill="#fff" stroke="#e0b060"/>
+  <text x="515" y="302" text-anchor="middle" font-size="12">analytics</text>
+  <rect x="440" y="320" width="150" height="30" rx="5" fill="#fff" stroke="#e0b060"/>
+  <text x="515" y="340" text-anchor="middle" font-size="12">data store</text>
+
+  <line x1="800" y1="92" x2="800" y2="128" stroke="#444" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="800" y1="190" x2="800" y2="258" stroke="#444" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="812" y="230" font-size="12" fill="#444">PUT /enqueue</text>
+
+  <!-- monolith-service initiates both halves: it polls, the queue answers. queue-service
+       never calls out to anyone, which is why it can stay ignorant of who consumes it. -->
+  <line x1="612" y1="278" x2="708" y2="278" stroke="#444" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="660" y="271" text-anchor="middle" font-size="12" fill="#444">GET /dequeue</text>
+
+  <line x1="708" y1="304" x2="612" y2="304" stroke="#444" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="5,4"/>
+  <text x="660" y="321" text-anchor="middle" font-size="12" fill="#444">message / 204</text>
+
+  <circle cx="515" cy="128" r="9" fill="none" stroke="#444" stroke-width="1.5"/>
+  <line x1="515" y1="138" x2="515" y2="178" stroke="#444" stroke-width="1.5" marker-end="url(#arrow)"/>
+</svg>

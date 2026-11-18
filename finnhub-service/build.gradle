@@ -1,0 +1,33 @@
+// Shared library module. All common configuration is inherited from the top-level
+// build.gradle. This module must not depend on any of our service modules.
+dependencies {
+	implementation project(':stock-app-shared')
+	implementation 'org.xerial:sqlite-jdbc:3.41.2.1'
+}
+
+task runService(type: JavaExec) {
+	mainClass = 'edu.bu.finhub.FinhubService'
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+task runServiceWithMockFinhub(type: JavaExec) {
+	mainClass = 'edu.bu.finhub.FinhubService'
+	classpath = sourceSets.main.runtimeClasspath
+	args = ["mockFinhub"]
+}
+
+// call this with --debug-jvm to have it start and wait for a debugger (IntelliJ) to be attached to it
+task runServiceWithMockFinhubPreload(type: JavaExec) {
+	mainClass = 'edu.bu.finhub.FinhubService'
+	classpath = sourceSets.main.runtimeClasspath
+	args = ["mockFinhub", "msBetweenCalls=10"]
+}
+
+task executePersistenceIntegrationTest(type: Test) {
+	useJUnitPlatform {
+		includeTags "IntegrationTest"
+	}
+	testLogging {
+		showStandardStreams = true
+	}
+}
